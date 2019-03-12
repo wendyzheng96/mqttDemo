@@ -24,9 +24,9 @@ MQTT 协议是为大量计算能力有限，且工作在低带宽、不可靠的
 
 6. 使用 Last Will 和 Testament 特性通知有关各方客户端异常中断的机制。
 
-- Last Will：即遗言机制，用于通知同一主题下的其他设备发送遗言的设备已经断开了连接。
-
-- Testament：遗嘱机制，功能类似于 Last Will 。
+>- Last Will：即遗言机制，用于通知同一主题下的其他设备发送遗言的设备已经断开了连接。
+>
+>- Testament：遗嘱机制，功能类似于 Last Will 。
 
 ## ActiveMQ
 
