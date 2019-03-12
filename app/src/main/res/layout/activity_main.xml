@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <com.zyf.ws.StarBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:starSize="20dp"
+            app:starDistance="10dp"
+            app:starCount="5"
+            app:starStep="2"
+            app:starEmpty="@drawable/ic_star_gray"
+            app:starFull="@drawable/ic_star_yellow"
+            app:onlyShow="false"/>
+
+        <Button
+            android:id="@+id/btn_web_service"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:textAllCaps="false"
+            android:text="WebService接口调用" />
+
+        <Button
+            android:id="@+id/btn_mqtt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textAllCaps="false"
+            android:text="MQTT实现推送消息" />
+
+    </LinearLayout>
+
+</layout>
