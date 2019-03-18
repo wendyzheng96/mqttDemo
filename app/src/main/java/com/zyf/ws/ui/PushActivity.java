@@ -40,7 +40,7 @@ public class PushActivity extends AppCompatActivity implements View.OnClickListe
     private MqttAndroidClient client;
     private MqttConnectOptions mqttConnectOptions;
     private boolean isReconnect = true;
-    private String topic = "test";
+    private String topic = "pushTest";
     private String imei = "androidID";
 
     @Override
@@ -52,7 +52,7 @@ public class PushActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         getIMEI();
-        init("tcp://10.0.0.9:1883", imei, "admin123", "public");
+        init("tcp://10.0.0.16:1883", imei, "admin", "admin");
 
         binding.tvMessage.setMovementMethod(ScrollingMovementMethod.getInstance());
         binding.btnSubscribe.setOnClickListener(this);
@@ -78,6 +78,8 @@ public class PushActivity extends AppCompatActivity implements View.OnClickListe
                     publish(topic,  convertTime(System.currentTimeMillis()));
                 }
                 break;
+            default:
+                break;
         }
     }
 
@@ -93,11 +95,11 @@ public class PushActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    //配置连接信息
     private void init(String serverURI, String androidId, String username, String password) {
         if (client == null || !client.isConnected()) {
             client = new MqttAndroidClient(this, serverURI, androidId);
         }
-        //配置连接信息
         //连接选项
         mqttConnectOptions = new MqttConnectOptions();
         //是否清除缓存
@@ -196,7 +198,7 @@ public class PushActivity extends AppCompatActivity implements View.OnClickListe
                             //主题对应的推送策略 分别是0, 1, 2 建议服务端和客户端配置的主题一致
                             // 0 表示只会发送一次推送消息 收到不收到都不关心
                             // 1 保证能收到消息，但不一定只收到一条
-                            // 2 保证收到切只能收到一条消息
+                            // 2 保证收到且只能收到一条消息
                             int qos = 0;
                             subscribe(topic, qos);
                         }

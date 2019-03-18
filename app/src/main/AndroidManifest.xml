@@ -25,10 +25,9 @@
         </activity>
         <activity android:name=".ui.WebServiceActivity" />
         <activity android:name=".ui.PushActivity" />
+        <activity android:name=".ui.MoreActivity"/>
 
         <service android:name="org.eclipse.paho.android.service.MqttService" />
-
-        <activity android:name=".ui.MoreActivity"></activity>
     </application>
 
 </manifest>

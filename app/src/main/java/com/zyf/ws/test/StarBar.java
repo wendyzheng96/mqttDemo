@@ -1,4 +1,4 @@
-package com.zyf.ws;
+package com.zyf.ws.test;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -11,6 +11,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.zyf.ws.R;
 
 /**
  * Created by zyf on 2019/2/13.
