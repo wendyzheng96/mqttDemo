@@ -50,16 +50,15 @@ MQTT 协议是为大量计算能力有限，且工作在低带宽、不可靠的
   
 ## 安装和配置  
   
-1. [下载ActiveMQ](http://activemq.apache.org/download.html)
-<br>下载之后解压，如下：
-![apache-activemq-5.15.8解压后](https://github.com/wendyzheng96/mqttDemo/blob/master/image/process_1.png?raw=true)
+1. [下载ActiveMQ](http://activemq.apache.org/download.html),下载之后解压，如下：<br>
+![enter image description here](https://github.com/wendyzheng96/mqttDemo/blob/master/image/process_1.png?raw=true)
 
 2. 查看端口
-打开activeMq的conf文件夹中的activemq.xml，查看服务器的端口，mqtt默认端口号是1883，当然你也可以修改。
+打开activeMq的conf文件夹中的activemq.xml，查看服务器的端口，mqtt默认端口号是1883，当然你也可以修改。<br>
 ![enter image description here](https://github.com/wendyzheng96/mqttDemo/blob/master/image/process_5.png?raw=true)
 
 3. 启动服务
-进入 G:\apache-activemq-5.15.8\bin\win64 文件夹，双击 activemq.bat 文件，
+进入 G:\apache-activemq-5.15.8\bin\win64 文件夹，双击 activemq.bat 文件，<br>
 ![enter image description here](https://github.com/wendyzheng96/mqttDemo/blob/master/image/process_2.png?raw=true)
 <br>会自动启动命令行窗口，
 ![enter image description here](https://github.com/wendyzheng96/mqttDemo/blob/master/image/process_3.png?raw=true)
