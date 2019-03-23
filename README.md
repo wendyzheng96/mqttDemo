@@ -48,7 +48,9 @@ MQTT 协议是为大量计算能力有限，且工作在低带宽、不可靠的
   
 - 一对多（topic）  
   
-## 安装和配置  
+## 安装和配置
+
+### 本地服务端搭建
   
 1. [下载ActiveMQ](http://activemq.apache.org/download.html),下载之后解压，如下：<br>
 ![enter image description here](https://github.com/wendyzheng96/mqttDemo/blob/master/image/process_1.png?raw=true)
@@ -65,4 +67,92 @@ MQTT 协议是为大量计算能力有限，且工作在低带宽、不可靠的
 <br>之后直接在浏览器访问 [http://localhost:8161](http://localhost:8161)，出现如下图所示页面，则说明配置成功。
 ![enter image description here](https://github.com/wendyzheng96/mqttDemo/blob/master/image/process_4.png?raw=true)
 
+### Android端配置
 
+1. 在build引入下面两个包：
+```
+implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.0'
+implementation 'org.eclipse.paho:org.eclipse.paho.android.service:1.1.1'
+```
+
+2. 在AndroidManifest.xml中声明MqttService
+```
+<service android:name="org.eclipse.paho.android.service.MqttService" />
+```
+
+3. 配置链接信息
+```
+//配置连接信息
+private void init(String serverURI, String androidId, String username, String password) {
+    if (client == null || !client.isConnected()) {
+        client = new MqttAndroidClient(this, serverURI, androidId);
+    }
+    //连接选项
+    mqttConnectOptions = new MqttConnectOptions();
+    //是否清除缓存
+    mqttConnectOptions.setCleanSession(true);
+    //是否重连
+	mqttConnectOptions.setAutomaticReconnect(true);
+    //设置心跳
+	mqttConnectOptions.setKeepAliveInterval(30);
+    //设置登录用户名
+	mqttConnectOptions.setUserName(username);
+    //设置登录密码
+	mqttConnectOptions.setPassword(password.toCharArray());
+    //设置超时时间
+	mqttConnectOptions.setConnectionTimeout(30);
+    //监听服务器发来的信息
+	client.setCallback(new MqttCallback() {
+        @Override
+        public void connectionLost(Throwable cause) {
+            //连接丢失异常
+        }
+
+        @Override
+        public void messageArrived(String topic, MqttMessage message) {
+            //收到服务器推送的消息
+        }
+
+        @Override
+        public void deliveryComplete(IMqttDeliveryToken token) {
+            //消息分发完毕
+        }
+    });
+
+    connect();
+}
+
+/**
+ * 连接MQTT
+ */
+ private void connect() {
+    try {
+        if (client != null && !client.isConnected()) {
+            client.connect(mqttConnectOptions, null, new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+                    Log.e(TAG, "connect success ");
+                    refreshLogView("\n连接成功!");
+                    if (client != null && client.isConnected()) {
+                        //订阅主题
+                        //主题对应的推送策略 分别是0, 1, 2 建议服务端和客户端配置的主题一致
+                        // 0 表示只会发送一次推送消息 收到不收到都不关心
+                        // 1 保证能收到消息，但不一定只收到一条
+                        // 2 保证收到且只能收到一条消息
+                        int qos = 0;
+                        subscribe(topic, qos);
+                    }
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                    Log.e(TAG, "connect failure: " + exception.getLocalizedMessage());
+                }
+            });
+        }
+    } catch (MqttException e) {
+        e.printStackTrace();
+    }
+}
+```
+具体实现请看[PushActivity](https://github.com/wendyzheng96/mqttDemo/blob/master/app/src/main/java/com/zyf/ws/ui/PushActivity.java)
