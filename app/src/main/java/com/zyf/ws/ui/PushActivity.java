@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.zyf.ws.R;
 import com.zyf.ws.databinding.ActivityPushBinding;
@@ -52,8 +53,9 @@ public class PushActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         getIMEI();
-        init("tcp://10.0.0.16:1883", imei, "admin", "admin");
 
+        binding.etIp.setText("10.0.0.30");
+        binding.btnConnect.setOnClickListener(this);
         binding.tvMessage.setMovementMethod(ScrollingMovementMethod.getInstance());
         binding.btnSubscribe.setOnClickListener(this);
         binding.btnUnsubscribe.setOnClickListener(this);
@@ -63,6 +65,14 @@ public class PushActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.btn_connect:
+                String ip = binding.etIp.getText().toString();
+                if (ip.length() > 0) {
+                    init("tcp://" + ip + ":1883", imei, "admin", "admin");
+                } else {
+                    Toast.makeText(this, "请输入ip地址", Toast.LENGTH_SHORT).show();
+                }
+                break;
             case R.id.btn_subscribe:
                 if (client != null && client.isConnected()) {
                     subscribe(topic, 0);
